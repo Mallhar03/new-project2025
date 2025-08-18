@@ -34,7 +34,7 @@ std::string getRandomAttacktType(std::mt19937 &gen){
 
 std::string generateLogEntry(std::mt19937 &gen) {
     std::ostringstream oss;
-    oss << getTimestamp() << " | "
+    oss << getTimestamps() << " | "
         << getRandomIP(gen) << " | "
         << getRandomAttackType(gen);
     return oss.str();
