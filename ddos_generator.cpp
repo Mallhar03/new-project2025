@@ -7,38 +7,10 @@
 #include <iomanip>
 #include <fstream>
 
+std::string getRandomIP (std::mt19937 &gen);
 std::string getTimestamps();
 std::string getRandomAttackType(std::mt19937 &gen);
-
-std::string getRandomIP (std::mt19937 &gen){
-    std::uniform_int_distribution<> dist(0,255); //
-    return  std::to_string(dist(gen)) + "." +
-            std::to_string(dist(gen)) + "." +
-            std::to_string(dist(gen)) + "." +
-            std::to_string(dist(gen));
-}
-
-std::string getTimestamps(){
-    auto t = std::time(nullptr);
-    auto tm = *std::localtime(&t);
-    std::ostringstream oss;
-    oss << std::put_time(&tm , "%Y-%m-%d %H:%M:%S" );
-    return oss.str(); // pulls the string from the string buffer which is stored in the oss (scratchpad)
-}
-
-std::string getRandomAttacktType(std::mt19937 &gen){
-    std::vector<std::string> attackTypes = { "UDP Flood","SYN Flood","ICMP Flood","HTTP Flood"};
-    std::uniform_int_distribution<> dist(0, attackTypes.size()-1);
-    return attackTypes[dist(gen)]; //index of the random attack which will be returned
-}
-
-std::string generateLogEntry(std::mt19937 &gen) {
-    std::ostringstream oss;
-    oss << getTimestamps() << " | "
-        << getRandomIP(gen) << " | "
-        << getRandomAttackType(gen);
-    return oss.str();
-}
+std::string generateLogEntry(std::mt19937 &gen);
 
 int main(){
     std::random_device rd;
@@ -57,4 +29,34 @@ int main(){
     logfile.close();
     std::cout << "Fake DDoS logs generated in ddos_log.txt ✅" <<std::endl;
     return 0;
+}
+
+std::string getRandomIP (std::mt19937 &gen){
+    std::uniform_int_distribution<> dist(0,255); //
+    return  std::to_string(dist(gen)) + "." +
+            std::to_string(dist(gen)) + "." +
+            std::to_string(dist(gen)) + "." +
+            std::to_string(dist(gen));
+}
+
+std::string getTimestamps(){
+    auto t = std::time(nullptr);
+    auto tm = *std::localtime(&t);
+    std::ostringstream oss;
+    oss << std::put_time(&tm , "%Y-%m-%d %H:%M:%S" );
+    return oss.str(); // pulls the string from the string buffer which is stored in the oss (scratchpad)
+}
+
+std::string getRandomAttackType(std::mt19937 &gen){
+    std::vector<std::string> attackTypes = { "UDP Flood","SYN Flood","ICMP Flood","HTTP Flood"};
+    std::uniform_int_distribution<> dist(0, attackTypes.size()-1);
+    return attackTypes[dist(gen)]; //index of the random attack which will be returned
+}
+
+std::string generateLogEntry(std::mt19937 &gen) {
+    std::ostringstream oss;
+    oss << getTimestamps() << " | "
+        << getRandomIP(gen) << " | "
+        << getRandomAttackType(gen);
+    return oss.str();
 }
