@@ -7,7 +7,7 @@
 #include <iomanip>
 #include <fstream>
 
-std::string getTimestamp();
+std::string getTimestamps();
 std::string getRandomAttackType(std::mt19937 &gen);
 
 std::string getRandomIP (std::mt19937 &gen){
@@ -22,7 +22,7 @@ std::string getTimestamps(){
     auto t = std::time(nullptr);
     auto tm = *std::localtime(&t);
     std::ostringstream oss;
-    oss << std::put_time(&tm , "%Y-%m-%d %H:%M:%:%S" );
+    oss << std::put_time(&tm , "%Y-%m-%d %H:%M:%S" );
     return oss.str(); // pulls the string from the string buffer which is stored in the oss (scratchpad)
 }
 
